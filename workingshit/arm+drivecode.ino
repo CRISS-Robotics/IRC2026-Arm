@@ -1,5 +1,6 @@
 #include <math.h>
 
+#include <Arduino.h>
 #include <micro_ros_arduino.h>
 #include <rcl/rcl.h>
 #include <rclc/rclc.h>
@@ -67,7 +68,6 @@ class MDD10A {
   private:
     int _pwm_pin, _dir_pin, _enca, _encb;
     volatile int _encoderCount; 
-    static void encoderInterruptA(); 
     static MDD10A* _instance; 
 };
 
@@ -100,14 +100,6 @@ void MDD10A::stop() {
   digitalWrite(_dir_pin, LOW); 
 }
 
-void MDD10A::encoderInterruptA() {
-  if (_instance) {
-    if (digitalRead(_instance->_enca) == digitalRead(_instance->_encb)) _instance->_encoderCount++;
-    else _instance->_encoderCount--;
-  }
-}
-
-void MDD10A::attachEncInterrupt() { attachInterrupt(digitalPinToInterrupt(_enca), encoderInterruptA, CHANGE); }
 int MDD10A::getEncoderCount() const { return _encoderCount; }
 
 // <---------------- MOTORS INSTANTIATION ---------------->
@@ -241,9 +233,9 @@ void loop() {
     motor1.run(0); motor2.run(0); motor3.run(0); motor4.run(0);
   } else {
     motor1.run((int)(target_v1 * PWM_GAIN));
-    motor2.run((int)(target_v2 * PWM_GAIN));
+    motor2.run(-    (int)(target_v2 * PWM_GAIN));
     motor3.run(-(int)(target_v3 * PWM_GAIN)); 
-    motor4.run(-(int)(target_v4 * PWM_GAIN));
+    motor4.run((int)(target_v4 * PWM_GAIN));
   }
 
   // --- ACTUATOR HARDWARE LOGIC ---
