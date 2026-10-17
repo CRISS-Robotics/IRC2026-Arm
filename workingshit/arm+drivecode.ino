@@ -233,7 +233,7 @@ void loop() {
     motor1.run(0); motor2.run(0); motor3.run(0); motor4.run(0);
   } else {
     motor1.run((int)(target_v1 * PWM_GAIN));
-    motor2.run(-    (int)(target_v2 * PWM_GAIN));
+    motor2.run((int)(target_v2 * PWM_GAIN));
     motor3.run(-(int)(target_v3 * PWM_GAIN)); 
     motor4.run((int)(target_v4 * PWM_GAIN));
   }
