@@ -15,7 +15,7 @@
 #define SDA_PIN 4
 #define SCL_PIN 15
 
-int wheel_ch[4] = {7, 5, 0, 1};
+int wheel_ch[4] = {0, 5, 7, 1};
 
 const int TOLERANCE = 5;
 
@@ -23,7 +23,7 @@ const int limitSwitchPin[4] = { 36, 35, 34, 39 }; //needs rechecking
 const int pwm[4] = { 23, 21, 18, 17 }; //5,17,16,22
 const int dir[4] = { 22, 19, 5, 16 }; //15,21,4,23
 const int ABS_ENC_PIN[4] = { 32, 25, 27, 12 }; // 26,14,25,33
-int ZERO_DEG_OFFSET[4] =  {  1679, 1376, 2268, 2276 };
+int ZERO_DEG_OFFSET[4] =  {  1367, 568, 2197, 2272 };
 int target_enc[4] =  { ZERO_DEG_OFFSET[0], ZERO_DEG_OFFSET[1], ZERO_DEG_OFFSET[2], ZERO_DEG_OFFSET[3] };
 
 long error[4] = { 0, 0, 0, 0 };
@@ -173,4 +173,3 @@ void loop() {
   rcl_ret_t ret = rcl_publish(&publisher, &pub_msg, NULL);
   (void)ret;
 }
-
